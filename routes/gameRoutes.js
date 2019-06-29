@@ -3,6 +3,7 @@ const router = express.Router()
 
 const db = require('./gameModel')
 
+const warez = require('./gameWare')
 //ROUTE: /api/games
 
 //C
@@ -13,11 +14,11 @@ const db = require('./gameModel')
 //     releaseYear: 1980 // not required
 // }
 // should return status code 422 if given wrong object (add in middleware)
-router.post('/', async (req, res) => {
+router.post('/', warez.check_fields, warez.check_duplicates, async (req, res) => {
     try {
-        const game = await db.post(req.body)
+        const game = await db.add(req.body)
         game
-        ?   res.status(201).json(game)
+        ?   res.status(200).json(game)
         :   res.status(404).json({message: `Game couldn't be added.`})
     }
     catch (err) {
