@@ -3,7 +3,7 @@
     // genre: 'Arcade', // required
     // releaseYear: 1980 // not required
 // }
-exports.up = function(knex) {
+exports.up = (knex) =>
     knex.schema.createTable('testing', tbl => {
         tbl.string('id')
             .notNullable()
@@ -12,11 +12,11 @@ exports.up = function(knex) {
         tbl.string('title')
             .notNullable()
             .unique()
+        tbl.string('genre')
+            .notNullable()
         tbl.int('releaseYear')
         tbl.timestamps(true, true)
     })
-}
 
-exports.down = function(knex) {
+exports.down = (knex) =>
     knex.schema.dropTableIfExists('testing')
-}

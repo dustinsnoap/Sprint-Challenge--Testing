@@ -3,22 +3,23 @@ const db = require('../data/dbConfig')
 module.exports = {
     get_all,
     get_by_id,
-    post,
+    add,
     remove,
 }
 
-function post(game) {
-    return null
+async function add(game) {
+    const [id] = await db('testing').insert(game)
+    return get_by_id(id)
 }
 
 function get_all() {
-    return null
+    return db('testing')
 }
 
 function get_by_id(id) {
-    return null
+    return db('testing').where({id}).first()
 }
 
 function remove(id) {
-    return null
+    return db('testing').where({id}).del()
 }
